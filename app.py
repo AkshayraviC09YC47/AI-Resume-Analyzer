@@ -162,6 +162,55 @@ def delete_history(rid):
 
     return redirect(url_for("history"))
 
+from flask import Response
+import json
+import requests
+
+@app.route("/analyze-stream", methods=["POST"])
+def analyze_stream():
+    token = request.cookies.get("token")
+    payload = verify_jwt(token) if token else None
+    if not payload:
+        return "", 401
+
+    file = request.files["resume"]
+    filename = secure_filename(file.filename)
+    path = os.path.join(UPLOAD_FOLDER, filename)
+    file.save(path)
+
+    resume_text = extract_text_from_pdf(path)
+    prompt = ats_prompt(resume_text)
+
+    def stream():
+        url = "http://localhost:11434/api/generate"
+        data = {
+            "model": "deepseek-r1:1.5b",
+            "prompt": prompt,
+            "stream": True
+        }
+
+        r = requests.post(url, json=data, stream=True)
+        final_output = []
+
+        for line in r.iter_lines():
+            if line:
+                chunk = json.loads(line.decode())
+                if "response" in chunk:
+                    text = chunk["response"]
+                    final_output.append(text)
+                    yield text
+
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO resume_history (username, filename, result) VALUES (?,?,?)",
+            (payload["sub"], filename, "".join(final_output))
+        )
+        conn.commit()
+        conn.close()
+
+    return Response(stream(), mimetype="text/event-stream")
+
 @app.route("/logout")
 def logout():
     resp = make_response(redirect(url_for("login")))

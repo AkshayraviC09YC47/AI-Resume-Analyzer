@@ -22,17 +22,47 @@
     <div class="card">
         <h3>Upload Resume (PDF)</h3>
 
-        <form method="POST" enctype="multipart/form-data">
+        <form id="uploadForm" enctype="multipart/form-data">
             <input type="file" name="resume" accept=".pdf" required>
             <button type="submit">Analyze Resume</button>
         </form>
 
-        {% if result %}
+        <div id="outputWrapper" style="display:none;">
             <hr>
-            <pre>{{ result }}</pre>
-        {% endif %}
+            <div id="output" class="output-box"></div>
+        </div>
     </div>
 </div>
+
+<script>
+const form = document.getElementById("uploadForm");
+const output = document.getElementById("output");
+const outputWrapper = document.getElementById("outputWrapper");
+
+form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    output.textContent = "";
+    outputWrapper.style.display = "block";
+
+    const formData = new FormData(form);
+
+    const response = await fetch("/analyze-stream", {
+        method: "POST",
+        body: formData
+    });
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+
+    while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        output.textContent += decoder.decode(value);
+        output.scrollTop = output.scrollHeight;
+    }
+});
+</script>
 
 </body>
 </html>
