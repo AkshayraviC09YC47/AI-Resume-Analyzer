@@ -53,8 +53,8 @@ def get_db():
 def generate_jwt(username):
     payload = {
         "sub": username,
-        "iat": datetime.datetime.utcnow(),
-        "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
+        "iat": datetime.datetime.now(datetime.UTC),
+        "exp": datetime.datetime.now(datetime.UTC) + datetime.timedelta(minutes=30)
     }
     return jwt.encode(payload, app.config["SECRET_KEY"], algorithm="HS256")
 

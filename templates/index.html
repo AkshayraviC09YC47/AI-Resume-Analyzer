@@ -2,27 +2,120 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AI Resume Analyzer | Admin Login</title>
-    <link rel="stylesheet" href="/static/login.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume ATS Analyzer - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <div class="container">
+        <div class="login-card">
+            <div class="login-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="30" cy="30" r="28" fill="#4CAF50" opacity="0.1"/>
+                            <path d="M30 10L35 20H25L30 10Z" fill="#4CAF50"/>
+                            <path d="M20 25H40V28H20V25Z" fill="#4CAF50"/>
+                            <path d="M22 32H38V35H22V32Z" fill="#4CAF50"/>
+                            <path d="M24 39H36V42H24V39Z" fill="#4CAF50"/>
+                            <path d="M26 46H34V49H26V46Z" fill="#4CAF50"/>
+                            <circle cx="18" cy="20" r="3" fill="#4CAF50" opacity="0.3"/>
+                            <circle cx="42" cy="20" r="3" fill="#4CAF50" opacity="0.3"/>
+                            <circle cx="18" cy="35" r="2" fill="#4CAF50" opacity="0.3"/>
+                            <circle cx="42" cy="35" r="2" fill="#4CAF50" opacity="0.3"/>
+                        </svg>
+                    </div>
+                    <div class="title-section">
+                        <h1><span class="ai-text">AI</span> Resume</h1>
+                        <p class="subtitle">ATS Analyzer</p>
+                    </div>
+                </div>
 
-<div class="page">
-    <div class="login-jumbotron">
-        <h1>AI Resume Analyzer</h1>
-        <p class="subtitle">Login Page</p>
+                <h2 class="login-title">Login</h2>
 
-        {% if error %}
-            <div class="error-box">{{ error }}</div>
-        {% endif %}
+                {% if error %}
+                    <div class="error-box">{{ error }}</div>
+                {% endif %}
 
-        <form method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
+                <form class="login-form" method="POST" action="{{ url_for('login') }}">
+                    <div class="input-group">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" name="username" placeholder="Username" required>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+
+                    <button type="submit" class="login-btn">Login</button>
+                </form>
+            </div>
+
+            <div class="illustration-section">
+                <div class="floating-icons">
+                    <div class="icon-circle icon-1">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="icon-circle icon-2">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="icon-circle icon-3">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="icon-circle icon-4">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="icon-circle icon-5">
+                        <i class="fas fa-circle"></i>
+                    </div>
+                </div>
+
+                <div class="main-illustration">
+                    <div class="resume-preview">
+                        <div class="resume-header">
+                            <div class="dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="resume-content">
+                            <div class="profile-pic"></div>
+                            <div class="resume-lines">
+                                <div class="line long"></div>
+                                <div class="line medium"></div>
+                                <div class="line short"></div>
+                            </div>
+                            <div class="checkmarks">
+                                <i class="fas fa-check check-1"></i>
+                                <i class="fas fa-check check-2"></i>
+                                <i class="fas fa-check check-3"></i>
+                            </div>
+                            <div class="big-check">
+                                <i class="fas fa-check"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="person-illustration">
+                        <div class="person-head"></div>
+                        <div class="person-body"></div>
+                        <div class="person-jacket"></div>
+                        <div class="person-laptop"></div>
+                    </div>
+
+                    <div class="desk">
+                        <div class="desk-surface"></div>
+                        <div class="desk-drawer"></div>
+                    </div>
+
+                    <div class="plant plant-left"></div>
+                    <div class="plant plant-right"></div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
 </body>
 </html>
