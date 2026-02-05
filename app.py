@@ -8,16 +8,17 @@ from werkzeug.utils import secure_filename
 from resume_parser import extract_text_from_pdf
 from ollama_client import analyze_resume
 from prompts import ats_prompt
+from config import *
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "QAZWSXEDCRFVTGBYHNUJMIKOLP12334567890"
+app.config["SECRET_KEY"] = SECRET_KEY
 
-UPLOAD_FOLDER = "uploads"
-DB_PATH = "database.db"
+UPLOAD_FOLDER = UPLOAD_FOLDER
+DB_PATH = DB_PATH
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-server_main_ip="192.168.1.20"
-server_main_port=1221
+server_main_ip=SERVER_IP
+server_main_port=SERVER_PORT
 
 def ensure_db():
     conn = sqlite3.connect(DB_PATH)
