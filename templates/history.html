@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>History | AI Resume Analyzer</title>
     <link rel="stylesheet" href="/static/history.css">
 </head>
@@ -17,30 +18,57 @@
     </div>
 </nav>
 
-<div class="container">
-    {% for h in history %}
-        <div class="card">
-            <div class="meta">
-                <strong>{{ h[1] }}</strong>
-                <span>{{ h[3] }}</span>
-            </div>
+<div class="container history-container">
 
+{% for h in history %}
+    <div class="history-card">
+        <div class="history-header" onclick="toggleResult(this)">
+            <div class="history-info">
+                <strong>{{ h[1] }}</strong>
+                <span class="timestamp">{{ h[3] }}</span>
+            </div>
+            <div class="chevron">▶</div>
+        </div>
+
+        <div class="history-body">
             <pre>{{ h[2] }}</pre>
 
             <form method="POST" action="/history/delete/{{ h[0] }}">
                 <button class="delete-btn">Delete</button>
             </form>
         </div>
+    </div>
 {% else %}
     <div class="empty-state">
         <div class="empty-icon">📄</div>
         <h3>No Resume History</h3>
-        <p>You haven’t analyzed any resumes yet.<br>
-           Upload a resume from the dashboard to get started.</p>
+        <p>
+            You haven’t analyzed any resumes yet.<br>
+            Upload a resume from the dashboard to get started.
+        </p>
         <a href="/dashboard" class="empty-btn">Go to Dashboard</a>
     </div>
 {% endfor %}
+
 </div>
+
+<script>
+function toggleResult(header) {
+    const card = header.parentElement;
+    const body = card.querySelector(".history-body");
+    const chevron = header.querySelector(".chevron");
+
+    const isOpen = body.classList.contains("open");
+
+    document.querySelectorAll(".history-body").forEach(b => b.classList.remove("open"));
+    document.querySelectorAll(".chevron").forEach(c => c.textContent = "▶");
+
+    if (!isOpen) {
+        body.classList.add("open");
+        chevron.textContent = "▼";
+    }
+}
+</script>
 
 </body>
 </html>
