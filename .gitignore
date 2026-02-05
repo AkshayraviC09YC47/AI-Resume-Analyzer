@@ -1,4 +1,4 @@
 __pycache__/
 uploads/
+database.db
 .env
-venv/

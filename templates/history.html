@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>History | AI Resume Analyzer</title>
+    <link rel="stylesheet" href="/static/history.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-left">
+        Welcome, {{ payload.sub }} | Dashboard for AI Resume Analyzer
+    </div>
+    <div class="nav-right">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/history">History</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    {% for h in history %}
+        <div class="card">
+            <div class="meta">
+                <strong>{{ h[1] }}</strong>
+                <span>{{ h[3] }}</span>
+            </div>
+
+            <pre>{{ h[2] }}</pre>
+
+            <form method="POST" action="/history/delete/{{ h[0] }}">
+                <button class="delete-btn">Delete</button>
+            </form>
+        </div>
+    {% else %}
+        <p>No history found.</p>
+    {% endfor %}
+</div>
+
+</body>
+</html>

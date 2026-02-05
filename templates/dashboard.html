@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | AI Resume Analyzer</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-left">
+        Welcome, {{ payload.sub }} | Dashboard for AI Resume Analyzer
+    </div>
+    <div class="nav-right">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/history">History</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <h3>Upload Resume (PDF)</h3>
+
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="resume" accept=".pdf" required>
+            <button type="submit">Analyze Resume</button>
+        </form>
+
+        {% if result %}
+            <hr>
+            <pre>{{ result }}</pre>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
