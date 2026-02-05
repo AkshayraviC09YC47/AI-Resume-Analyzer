@@ -10,11 +10,14 @@ from ollama_client import analyze_resume
 from prompts import ats_prompt
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "super-secret-jwt-key"
+app.config["SECRET_KEY"] = "QAZWSXEDCRFVTGBYHNUJMIKOLP"
 
 UPLOAD_FOLDER = "uploads"
 DB_PATH = "database.db"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+server_main_ip="192.168.1.20"
+server_main_port=1221
 
 def ensure_db():
     conn = sqlite3.connect(DB_PATH)
@@ -218,5 +221,5 @@ def logout():
     return resp
 
 if __name__ == "__main__":
-    app.run(host="192.168.1.20", port=1221, debug=True)
+    app.run(host=server_main_ip, port=server_main_port, debug=True)
 
