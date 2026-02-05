@@ -31,9 +31,15 @@
                 <button class="delete-btn">Delete</button>
             </form>
         </div>
-    {% else %}
-        <p>No history found.</p>
-    {% endfor %}
+{% else %}
+    <div class="empty-state">
+        <div class="empty-icon">📄</div>
+        <h3>No Resume History</h3>
+        <p>You haven’t analyzed any resumes yet.<br>
+           Upload a resume from the dashboard to get started.</p>
+        <a href="/dashboard" class="empty-btn">Go to Dashboard</a>
+    </div>
+{% endfor %}
 </div>
 
 </body>
