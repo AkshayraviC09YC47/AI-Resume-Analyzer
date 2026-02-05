@@ -19,31 +19,107 @@
 </nav>
 
 <div class="container">
-    <div class="card">
+
+    <!-- EMPTY STATE UPLOAD CARD -->
+    <div id="uploadEmptyState" class="empty-state">
+        <div class="empty-icon">📄</div>
+        <h3>Upload Your Resume</h3>
+        <p>
+            Find your resume ATS score<br>
+            Select your resume and click on analyse
+        </p>
+
+        <input id="resumeInput" type="file" name="resume" accept=".pdf" hidden>
+        <label for="resumeInput" class="empty-btn">Choose file</label>
+    </div>
+
+    <!-- MAIN CARD (HIDDEN INITIALLY) -->
+    <div id="uploadCard" class="card" style="display:none;">
         <h3>Upload Resume (PDF)</h3>
 
         <form id="uploadForm" enctype="multipart/form-data">
-            <input type="file" name="resume" accept=".pdf" required>
-            <button type="submit">Analyze Resume</button>
+            <input id="resumeInput2" type="file" name="resume" accept=".pdf" hidden>
+
+            <div class="file-upload">
+                <label for="resumeInput2" class="file-btn">Choose PDF</label>
+                <span id="fileName" class="file-name"></span>
+                <button id="analyzeBtn" type="submit">Analyze Resume</button>
+            </div>
         </form>
+
+        <div id="status" class="status" style="display:none;">
+            <span class="spinner"></span>
+            <span id="statusText">Analyzing resume</span>
+        </div>
 
         <div id="outputWrapper" style="display:none;">
             <hr>
             <div id="output" class="output-box"></div>
         </div>
     </div>
+
 </div>
 
 <script>
+const emptyState = document.getElementById("uploadEmptyState");
+const uploadCard = document.getElementById("uploadCard");
+
+const resumeInput = document.getElementById("resumeInput");
+const resumeInput2 = document.getElementById("resumeInput2");
+
+const fileName = document.getElementById("fileName");
 const form = document.getElementById("uploadForm");
+const analyzeBtn = document.getElementById("analyzeBtn");
+
 const output = document.getElementById("output");
 const outputWrapper = document.getElementById("outputWrapper");
+const status = document.getElementById("status");
+const statusText = document.getElementById("statusText");
+
+let dotsTimer;
+let hasStartedStreaming = false;
+
+/* When file chosen from empty state */
+resumeInput.addEventListener("change", () => {
+    if (resumeInput.files.length) {
+        resumeInput2.files = resumeInput.files;
+        fileName.textContent = resumeInput.files[0].name;
+        emptyState.style.display = "none";
+        uploadCard.style.display = "block";
+    }
+});
+
+/* When file chosen from main card */
+resumeInput2.addEventListener("change", () => {
+    fileName.textContent = resumeInput2.files.length
+        ? resumeInput2.files[0].name
+        : "";
+});
+
+function startAnalyzing() {
+    status.style.display = "flex";
+    analyzeBtn.disabled = true;
+
+    let dots = 0;
+    dotsTimer = setInterval(() => {
+        dots = (dots + 1) % 4;
+        statusText.textContent = "Analyzing resume" + ".".repeat(dots);
+    }, 500);
+}
+
+function stopAnalyzing() {
+    clearInterval(dotsTimer);
+    status.style.display = "none";
+    analyzeBtn.disabled = false;
+}
 
 form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     output.textContent = "";
-    outputWrapper.style.display = "block";
+    outputWrapper.style.display = "none";
+    hasStartedStreaming = false;
+    startAnalyzing();
 
     const formData = new FormData(form);
 
@@ -58,9 +134,19 @@ form.addEventListener("submit", async function (e) {
     while (true) {
         const { value, done } = await reader.read();
         if (done) break;
-        output.textContent += decoder.decode(value);
+
+        const chunk = decoder.decode(value);
+
+        if (!hasStartedStreaming && chunk.trim().length > 0) {
+            outputWrapper.style.display = "block";
+            hasStartedStreaming = true;
+        }
+
+        output.textContent += chunk;
         output.scrollTop = output.scrollHeight;
     }
+
+    stopAnalyzing();
 });
 </script>
 

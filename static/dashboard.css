@@ -101,3 +101,127 @@ pre {
     line-height: 1.6;
     overflow-y: auto;
 }
+
+.status {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #16a34a;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.spinner {
+    width: 14px;
+    height: 14px;
+    border: 3px solid #bbf7d0;
+    border-top: 3px solid #16a34a;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.file-btn {
+    background: #22c55e;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.file-btn:hover {
+    background: #16a34a;
+}
+
+.file-name {
+    font-size: 14px;
+    color: #374151;
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.empty-state {
+    max-width: 520px;
+    margin: 80px auto;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 50px 40px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.empty-icon {
+    font-size: 42px;
+    margin-bottom: 16px;
+}
+
+.empty-state h3 {
+    margin: 0 0 10px;
+    font-size: 22px;
+    color: #111827;
+}
+
+.empty-state p {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 22px;
+}
+
+.empty-btn {
+    display: inline-block;
+    background: #22c55e;
+    color: #ffffff;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.file-btn {
+    background: #22c55e;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.file-name {
+    flex: 1;
+    font-size: 14px;
+    color: #374151;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
