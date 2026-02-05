@@ -10,7 +10,7 @@ from ollama_client import analyze_resume
 from prompts import ats_prompt
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "QAZWSXEDCRFVTGBYHNUJMIKOLP"
+app.config["SECRET_KEY"] = "QAZWSXEDCRFVTGBYHNUJMIKOLP123"
 
 UPLOAD_FOLDER = "uploads"
 DB_PATH = "database.db"
