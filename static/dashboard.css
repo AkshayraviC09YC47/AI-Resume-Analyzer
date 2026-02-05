@@ -33,6 +33,10 @@ body {
     text-decoration: underline;
 }
 
+.navbar {
+    font-size: 18px;
+}
+
 /* Layout */
 .container {
     padding: 40px 20px;

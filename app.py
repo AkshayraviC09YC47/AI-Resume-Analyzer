@@ -218,5 +218,5 @@ def logout():
     return resp
 
 if __name__ == "__main__":
-    app.run(host="172.29.183.197", port=1221, debug=True)
+    app.run(host="192.168.1.20", port=1221, debug=True)
 
