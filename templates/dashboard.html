@@ -20,7 +20,7 @@
 
 <div class="container">
 
-    <!-- EMPTY STATE UPLOAD CARD -->
+    <!-- EMPTY STATE -->
     <div id="uploadEmptyState" class="empty-state">
         <div class="empty-icon">📄</div>
         <h3>Upload Your Resume</h3>
@@ -29,11 +29,11 @@
             Select your resume and click on analyse
         </p>
 
-        <input id="resumeInput" type="file" name="resume" accept=".pdf" hidden>
-        <label for="resumeInput" class="empty-btn">Choose file</label>
+        <input id="resumeInput" type="file" accept=".pdf" hidden>
+        <button id="primaryBtn" class="empty-btn">Choose PDF</button>
     </div>
 
-    <!-- MAIN CARD (HIDDEN INITIALLY) -->
+    <!-- UPLOAD CARD -->
     <div id="uploadCard" class="card" style="display:none;">
         <h3>Upload Resume (PDF)</h3>
 
@@ -41,9 +41,15 @@
             <input id="resumeInput2" type="file" name="resume" accept=".pdf" hidden>
 
             <div class="file-upload">
-                <label for="resumeInput2" class="file-btn">Choose PDF</label>
-                <span id="fileName" class="file-name"></span>
-                <button id="analyzeBtn" type="submit">Analyze Resume</button>
+                <div class="file-pill">
+                    <span id="fileText" class="file-text"></span>
+                    <span id="removeFile" class="remove-file">✕</span>
+                </div>
+
+                <!-- ✅ FIXED BUTTON -->
+                <button id="analyzeBtn" type="submit" class="analyze-btn">
+                    Analyze Resume
+                </button>
             </div>
         </form>
 
@@ -67,10 +73,13 @@ const uploadCard = document.getElementById("uploadCard");
 const resumeInput = document.getElementById("resumeInput");
 const resumeInput2 = document.getElementById("resumeInput2");
 
-const fileName = document.getElementById("fileName");
-const form = document.getElementById("uploadForm");
+const primaryBtn = document.getElementById("primaryBtn");
 const analyzeBtn = document.getElementById("analyzeBtn");
 
+const fileText = document.getElementById("fileText");
+const removeFile = document.getElementById("removeFile");
+
+const form = document.getElementById("uploadForm");
 const output = document.getElementById("output");
 const outputWrapper = document.getElementById("outputWrapper");
 const status = document.getElementById("status");
@@ -79,23 +88,30 @@ const statusText = document.getElementById("statusText");
 let dotsTimer;
 let hasStartedStreaming = false;
 
-/* When file chosen from empty state */
+/* Choose file */
+primaryBtn.addEventListener("click", () => resumeInput.click());
+
 resumeInput.addEventListener("change", () => {
-    if (resumeInput.files.length) {
-        resumeInput2.files = resumeInput.files;
-        fileName.textContent = resumeInput.files[0].name;
-        emptyState.style.display = "none";
-        uploadCard.style.display = "block";
-    }
+    if (!resumeInput.files.length) return;
+
+    resumeInput2.files = resumeInput.files;
+    fileText.textContent = resumeInput.files[0].name;
+
+    emptyState.style.display = "none";
+    uploadCard.style.display = "block";
 });
 
-/* When file chosen from main card */
-resumeInput2.addEventListener("change", () => {
-    fileName.textContent = resumeInput2.files.length
-        ? resumeInput2.files[0].name
-        : "";
+/* Remove file */
+removeFile.addEventListener("click", () => {
+    resumeInput.value = "";
+    resumeInput2.value = "";
+    fileText.textContent = "";
+
+    uploadCard.style.display = "none";
+    emptyState.style.display = "block";
 });
 
+/* Analyze animation */
 function startAnalyzing() {
     status.style.display = "flex";
     analyzeBtn.disabled = true;

@@ -9,6 +9,7 @@ body {
     color: #111827;
 }
 
+/* Navbar */
 .navbar {
     height: 60px;
     background: #22c55e;
@@ -25,12 +26,14 @@ body {
     color: #ffffff;
     text-decoration: none;
     font-weight: 600;
+    margin-left: 16px;
 }
 
 .navbar a:hover {
     text-decoration: underline;
 }
 
+/* Layout */
 .container {
     padding: 40px 20px;
 }
@@ -50,119 +53,7 @@ body {
     color: #111827;
 }
 
-input[type="file"] {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #d1d5db;
-    background: #ffffff;
-}
-
-button {
-    margin-top: 14px;
-    background: #22c55e;
-    color: #ffffff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #16a34a;
-}
-
-hr {
-    margin: 28px 0;
-    border: none;
-    border-top: 1px solid #e5e7eb;
-}
-
-pre {
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 13px;
-    line-height: 1.6;
-    white-space: pre-wrap;
-}
-
-.output-box {
-    margin-top: 20px;
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    padding: 20px;
-    border-radius: 10px;
-    min-height: 200px;
-    white-space: pre-wrap;
-    font-size: 14px;
-    line-height: 1.6;
-    overflow-y: auto;
-}
-
-.status {
-    margin-top: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #16a34a;
-    font-weight: 600;
-    font-size: 14px;
-}
-
-.spinner {
-    width: 14px;
-    height: 14px;
-    border: 3px solid #bbf7d0;
-    border-top: 3px solid #16a34a;
-    border-radius: 50%;
-    animation: spin 0.9s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.file-upload {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-}
-
-.file-btn {
-    background: #22c55e;
-    color: #ffffff;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-.file-btn:hover {
-    background: #16a34a;
-}
-
-.file-name {
-    font-size: 14px;
-    color: #374151;
-    max-width: 500px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
+/* Empty state */
 .empty-state {
     max-width: 520px;
     margin: 80px auto;
@@ -192,32 +83,42 @@ button:disabled {
 }
 
 .empty-btn {
-    display: inline-block;
     background: #22c55e;
     color: #ffffff;
     padding: 10px 22px;
     border-radius: 8px;
     font-weight: 600;
+    border: none;
     cursor: pointer;
 }
 
+.empty-btn:hover {
+    background: #16a34a;
+}
+
+/* File upload row */
 .file-upload {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 }
 
-.file-btn {
-    background: #22c55e;
-    color: #ffffff;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-}
 
-.file-name {
+/* File pill */
+.file-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 999px;
+    min-height: 40px;
+    max-width: 65%;
     flex: 1;
+}
+
+.file-text {
     font-size: 14px;
     color: #374151;
     white-space: nowrap;
@@ -225,3 +126,96 @@ button:disabled {
     text-overflow: ellipsis;
 }
 
+.remove-file {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ef4444;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.remove-file:hover {
+    color: #dc2626;
+}
+
+/* Analyze button */
+.analyze-btn {
+    all: unset;
+
+    min-width: 170px;
+    height: 40px;
+    padding: 0 22px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #22c55e;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+
+    border-radius: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+
+    flex-shrink: 0;
+}
+
+.analyze-btn:hover {
+    background: #16a34a;
+}
+
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Status */
+.status {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #16a34a;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.spinner {
+    width: 14px;
+    height: 14px;
+    border: 3px solid #bbf7d0;
+    border-top: 3px solid #16a34a;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Output */
+hr {
+    margin: 28px 0;
+    border: none;
+    border-top: 1px solid #e5e7eb;
+}
+
+.output-box {
+    margin-top: 20px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    border-radius: 10px;
+    min-height: 200px;
+    white-space: pre-wrap;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-y: auto;
+}
