@@ -146,9 +146,8 @@ body {
 .analyze-btn {
     all: unset;
 
-    min-width: 170px;
     height: 40px;
-    padding: 0 22px;
+    padding: 0 14px;
 
     display: inline-flex;
     align-items: center;
