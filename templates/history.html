@@ -2,70 +2,150 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History | AI Resume Analyzer</title>
-    <link rel="stylesheet" href="/static/history.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='history.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
 <nav class="navbar">
-    <div class="nav-left">
-        <strong> Welcome, {{ payload.sub }} </strong>| Dashboard for AI Resume Analyzer
-    </div>
-    <div class="nav-right">
-        <a href="/dashboard">Dashboard</a>
-        <a href="/history">History</a>
-        <a href="/logout">Logout</a>
+    <div class="nav-content">
+        <div class="nav-left">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="28" fill="#fff" opacity="0.2"/>
+                    <path d="M30 10L35 20H25L30 10Z" fill="#fff"/>
+                    <path d="M20 25H40V28H20V25Z" fill="#fff"/>
+                    <path d="M22 32H38V35H22V32Z" fill="#fff"/>
+                    <path d="M24 39H36V42H24V39Z" fill="#fff"/>
+                    <path d="M26 46H34V49H26V46Z" fill="#fff"/>
+                </svg>
+            </div>
+            <div class="nav-brand">
+                <h2><span class="ai-text">AI</span> Resume Analyzer</h2>
+                <p class="welcome-text">Welcome, <strong>{{ payload.sub }}</strong></p>
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="/dashboard" class="nav-link">
+                <i class="fas fa-th-large"></i>
+                Dashboard
+            </a>
+            <a href="/history" class="nav-link active">
+                <i class="fas fa-history"></i>
+                History
+            </a>
+            <a href="/logout" class="nav-link logout-link">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </div>
     </div>
 </nav>
 
-<div class="container history-container">
+<div class="main-container">
+    
+    <div class="page-header">
+        <div class="header-icon">
+            <i class="fas fa-clock-rotate-left"></i>
+        </div>
+        <div class="header-text">
+            <h1>Analysis History</h1>
+            <p>View and manage your previous resume analyses</p>
+        </div>
+    </div>
 
-{% for h in history %}
-    <div class="history-card">
-        <div class="history-header" onclick="toggleResult(this)">
-            <div class="history-info">
-                <strong>{{ h[1] }}</strong>
-                <span class="timestamp">{{ h[3] }}</span>
+    <div class="history-grid">
+        {% for h in history %}
+            <div class="history-card">
+                <div class="card-top" onclick="toggleResult(this)">
+                    <div class="card-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="resume-name">{{ h[1] }}</h3>
+                        <div class="meta-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span class="timestamp">{{ h[3] }}</span>
+                        </div>
+                    </div>
+                    <div class="expand-btn">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    <div class="result-section">
+                        <div class="result-header">
+                            <i class="fas fa-chart-bar"></i>
+                            <h4>Analysis Results</h4>
+                        </div>
+                        <div class="result-content">
+                            <pre>{{ h[2] }}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="card-actions">
+                        <form method="POST" action="/history/delete/{{ h[0] }}" onsubmit="return confirm('Are you sure you want to delete this analysis?');">
+                            <button type="submit" class="delete-btn">
+                                <i class="fas fa-trash-alt"></i>
+                                Delete Analysis
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="chevron">▶</div>
-        </div>
-
-        <div class="history-body">
-            <pre>{{ h[2] }}</pre>
-
-            <form method="POST" action="/history/delete/{{ h[0] }}">
-                <button class="delete-btn">Delete</button>
-            </form>
-        </div>
+        {% else %}
+            <div class="empty-state-card">
+                <div class="empty-illustration">
+                    <div class="empty-icon">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <div class="floating-elements">
+                        <div class="float-icon float-1"><i class="fas fa-file"></i></div>
+                        <div class="float-icon float-2"><i class="fas fa-clock"></i></div>
+                        <div class="float-icon float-3"><i class="fas fa-search"></i></div>
+                    </div>
+                </div>
+                
+                <div class="empty-content">
+                    <h2>No Analysis History</h2>
+                    <p>
+                        You haven't analyzed any resumes yet.<br>
+                        Upload your first resume to get started with AI-powered analysis.
+                    </p>
+                    
+                    <a href="/dashboard" class="primary-btn">
+                        <i class="fas fa-arrow-right"></i>
+                        Go to Dashboard
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-{% else %}
-    <div class="empty-state">
-        <div class="empty-icon">📄</div>
-        <h3>No Resume History</h3>
-        <p>
-            You haven’t analyzed any resumes yet.<br>
-            Upload a resume from the dashboard to get started.
-        </p>
-        <a href="/dashboard" class="empty-btn">Go to Dashboard</a>
-    </div>
-{% endfor %}
 
 </div>
 
 <script>
 function toggleResult(header) {
     const card = header.parentElement;
-    const body = card.querySelector(".history-body");
-    const chevron = header.querySelector(".chevron");
-
+    const body = card.querySelector(".card-body");
+    const expandBtn = header.querySelector(".expand-btn i");
     const isOpen = body.classList.contains("open");
-
-    document.querySelectorAll(".history-body").forEach(b => b.classList.remove("open"));
-    document.querySelectorAll(".chevron").forEach(c => c.textContent = "▶");
-
+    
+    // Close all other cards
+    document.querySelectorAll(".card-body").forEach(b => b.classList.remove("open"));
+    document.querySelectorAll(".expand-btn i").forEach(icon => {
+        icon.classList.remove("fa-chevron-up");
+        icon.classList.add("fa-chevron-down");
+    });
+    
+    // Toggle current card
     if (!isOpen) {
         body.classList.add("open");
-        chevron.textContent = "▼";
+        expandBtn.classList.remove("fa-chevron-down");
+        expandBtn.classList.add("fa-chevron-up");
     }
 }
 </script>
