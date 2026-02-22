@@ -1,6 +1,5 @@
-from config import OLLAMA_URL, OLLAMA_MODEL
-import requests
-import json
+import requests, json
+from .config import OLLAMA_URL, OLLAMA_MODEL
 
 def analyze_resume(prompt):
     payload = {

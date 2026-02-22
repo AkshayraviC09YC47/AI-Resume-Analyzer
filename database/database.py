@@ -1,7 +1,6 @@
 import sqlite3
 import os
-from config import DB_PATH
-
+from config_module.config import DB_PATH
 
 def ensure_db():
     """Initialize database with required tables and default admin user."""

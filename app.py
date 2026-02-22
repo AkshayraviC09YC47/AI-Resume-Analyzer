@@ -1,13 +1,8 @@
-import os
-import json
-import requests
+import os, json, requests
 from flask import Flask, render_template, request, redirect, url_for, make_response, Response
 from werkzeug.utils import secure_filename
 
-from resume_parser import extract_text_from_pdf
-from ollama_client import analyze_resume
-from prompts import ats_prompt
-from config import SECRET_KEY, UPLOAD_FOLDER, DB_PATH, SERVER_IP, SERVER_PORT, OLLAMA_URL, OLLAMA_MODEL
+from config_module import SECRET_KEY, UPLOAD_FOLDER, DB_PATH, SERVER_IP, SERVER_PORT, OLLAMA_URL, OLLAMA_MODEL, extract_text_from_pdf, analyze_resume, ats_prompt
 from database import ensure_db, save_resume_to_history, get_user_by_credentials, get_user_history, delete_user_history_entry
 from auth import generate_jwt, verify_jwt, get_current_user
 
@@ -227,6 +222,7 @@ def internal_error(e):
 
 if __name__ == "__main__":
     print(f"[*] Starting server on {SERVER_IP}:{SERVER_PORT}")
+    print("[*] Press Ctrl+C to stop the server")
     
     try:
         from waitress import serve
@@ -235,4 +231,19 @@ if __name__ == "__main__":
     except ImportError:
         print("[!] Waitress not found, falling back to Flask dev server")
         print("[!] WARNING: Dev server should not be used in production")
-        app.run(host=SERVER_IP, port=SERVER_PORT, debug=False)
+        try:
+            app.run(host=SERVER_IP, port=SERVER_PORT, debug=False)
+        except KeyboardInterrupt:
+            print("\n[*] Keyboard interrupt received (Ctrl+C)")
+            print("[*] Shutting down Flask dev server gracefully...")
+        except Exception as e:
+            print(f"\n[!] Error running Flask dev server: {e}")
+        finally:
+            print("[*] Server stopped")
+    except KeyboardInterrupt:
+        print("\n[*] Keyboard interrupt received (Ctrl+C)")
+        print("[*] Shutting down Waitress server gracefully...")
+    except Exception as e:
+        print(f"\n[!] Unexpected error: {e}")
+    finally:
+        print("[*] Cleanup complete. Goodbye!")

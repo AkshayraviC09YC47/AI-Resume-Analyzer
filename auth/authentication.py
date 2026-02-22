@@ -1,7 +1,7 @@
 import jwt
 import datetime
 from flask import request
-from config import SECRET_KEY
+from config_module.config import SECRET_KEY
 
 
 def generate_jwt(username):
