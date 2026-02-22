@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | AI Resume Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='error.css') }}">
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-content">
+            <div class="error-icon">
+                <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="#4CAF50" stroke-width="2"/>
+                    <path d="M12 8V12M12 16H12.01" stroke="#4CAF50" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            
+            <h1 class="error-code">404</h1>
+            <h2 class="error-title">Page Not Found</h2>
+            <p class="error-message">
+                Oops! The page you're looking for doesn't exist.<br>
+                It might have been moved or deleted.
+            </p>
+        </div>
+        
+        <div class="illustration">
+            <svg width="300" height="300" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Document illustration -->
+                <rect x="100" y="80" width="200" height="240" rx="10" fill="#E8F5E9"/>
+                <rect x="100" y="80" width="200" height="240" rx="10" stroke="#4CAF50" stroke-width="3"/>
+                
+                <!-- Question mark -->
+                <text x="200" y="220" font-size="100" fill="#4CAF50" text-anchor="middle" font-weight="bold">?</text>
+                
+                <!-- Decorative elements -->
+                <circle cx="80" cy="100" r="15" fill="#81C784" opacity="0.5"/>
+                <circle cx="320" cy="280" r="20" fill="#81C784" opacity="0.3"/>
+                <circle cx="350" cy="120" r="10" fill="#4CAF50" opacity="0.4"/>
+            </svg>
+        </div>
+    </div>
+</body>
+</html>

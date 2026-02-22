@@ -1,4 +1,4 @@
-from config import OLLAMA_URL, MODEL
+from config import OLLAMA_URL, OLLAMA_MODEL
 import requests
 import json
 
