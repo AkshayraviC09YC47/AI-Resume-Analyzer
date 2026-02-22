@@ -18,7 +18,7 @@ def get_local_ip():
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads")
-DB_PATH = os.getenv("DB_PATH", "database/database.db")  # Changed to database folder
+DB_PATH = os.getenv("DB_PATH", "database/database.db")
 SERVER_IP = os.getenv("SERVER_IP") or get_local_ip()
 SERVER_PORT = int(os.getenv("SERVER_PORT", 1221))
 OLLAMA_URL = os.getenv("OLLAMA_URL")
